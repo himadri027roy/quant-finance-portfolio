@@ -24,7 +24,7 @@ A **Python-based quantitative finance toolkit** built to demonstrate expertise i
 - Risk measurement and regulatory frameworks (SR 11-7 / Basel III)
 - Systematic trading strategy research and backtesting
 
-Built by **Himadri Roy** — PhD in Physics (IIT Kanpur) | CFA Level I
+**Author:** Himadri Roy — PhD in Physics (IIT Kanpur) | CFA Level I | NISM-Series XV
 
 ---
 
@@ -73,7 +73,7 @@ $$S_T = S_0\,\exp\!\left[\left(r - \tfrac{1}{2}\sigma^2\right)T + \sigma\sqrt{T}
 
 **Implemented:**
 - European & Asian (arithmetic/geometric average) options
-- Antithetic variates variance reduction — halves error vs standard MC
+- Antithetic variates variance reduction
 - Convergence analysis: confirms $O(1/\sqrt{N})$ rate
 - Benchmark validation: MC vs analytical BS (error < 0.002 at 500k paths)
 
@@ -103,9 +103,6 @@ Raw Prices → Signal Generator → 1-Day Lag (no look-ahead) → Position
 | Mean Reversion (BB 2σ) | 0.61 | 8.3% | -18.9% | 312 |
 | RSI (14d, 30/70) | 0.55 | 7.1% | -19.4% | 98 |
 
-### Performance Metrics Computed
-`Sharpe Ratio` · `Sortino Ratio` · `Calmar Ratio` · `Max Drawdown` · `Win Rate` · `CAGR` · `Number of Trades` · `Buy & Hold Comparison`
-
 ---
 
 ## Module 3 — Value-at-Risk & Model Validation
@@ -120,28 +117,21 @@ Raw Prices → Signal Generator → 1-Day Lag (no look-ahead) → Position
 
 ### Kupiec POF Test (SR 11-7 Model Validation)
 
-The Likelihood Ratio statistic tests $H_0$: observed violation rate = expected rate:
-
 $$LR = -2\left[x\ln\!\frac{p}{p'} + (T-x)\ln\!\frac{1-p}{1-p'}\right] \sim \chi^2(1)$$
 
-Reject $H_0$ (model is mis-specified) if $LR > 3.84$ (95% critical value).
+Reject $H_0$ if $LR > 3.84$ (95% critical value).
 
 ---
 
 ## Module 4 — Portfolio Optimisation
 
-### Markowitz Mean-Variance Framework
-
-**Max Sharpe (Tangency) Portfolio:**
 $$\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf{w}^\top\boldsymbol{\Sigma}\,\mathbf{w}}} \quad \text{s.t.} \quad \mathbf{1}^\top\mathbf{w}=1,\; \mathbf{w}\geq 0$$
-
-**Results (5-Asset Portfolio):**
 
 | Portfolio | Return | Volatility | Sharpe |
 |-----------|--------|------------|--------|
 | Max Sharpe | 8.12% | 6.34% | **0.49** |
-| Min Variance | 3.81% | 4.21% | **-0.28** |
-| Equal Weight | 5.20% | 9.10% | **0.02** |
+| Min Variance | 3.81% | 4.21% | 0.28 |
+| Equal Weight | 5.20% | 9.10% | 0.02 |
 
 ### Stress Test Results ($10M Portfolio)
 
@@ -157,22 +147,10 @@ $$\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf
 ## Quickstart
 
 ```bash
-# Clone
 git clone https://github.com/himadri027roy/quant-finance-portfolio.git
 cd quant-finance-portfolio
-
-# Install
 pip install -r requirements.txt
-
-# Run interactive demo
 jupyter notebook notebooks/quant_finance_demo.ipynb
-
-# Run individual modules
-python options_pricing/black_scholes.py
-python options_pricing/monte_carlo.py
-python backtesting/strategies.py
-python risk_analytics/var_models.py
-python risk_analytics/portfolio_analytics.py
 ```
 
 ---
@@ -204,7 +182,7 @@ PhD in Physics — IIT Kanpur | CFA Level I | NISM-Series XV
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/himadriroyiitk)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/himadri027roy)
-[![Google Scholar](https://img.shields.io/badge/Google_Scholar-Publications-4285F4?style=for-the-badge&logo=google-scholar&logoColor=white)](https://scholar.google.com)
+[![InspireHEP](https://img.shields.io/badge/InspireHEP-Publications-e06c00?style=for-the-badge&logo=arxiv&logoColor=white)](https://inspirehep.net/authors/1969274)
 
 *Open to Quantitative Researcher & Model Validation roles — Worldwide*
 
