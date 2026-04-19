@@ -1,109 +1,213 @@
-# Quant Finance Portfolio
+<div align="center">
 
-A Python-based quantitative finance toolkit demonstrating skills in options pricing, backtesting, and risk analytics — built to showcase expertise relevant to **Quantitative Researcher** and **Model Validation** roles.
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Quant%20Finance%20Portfolio&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=38&desc=Options%20Pricing%20%7C%20Backtesting%20%7C%20Risk%20Analytics%20%7C%20Portfolio%20Optimisation&descAlignY=58&descSize=16"/>
 
-## Modules
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=18&duration=2500&pause=800&color=C9A84C&center=true&vCenter=true&width=700&lines=Black-Scholes+%2B+Monte+Carlo+Options+Pricing;Vectorised+Backtesting+Engine+%2B+4+Strategies;VaR+%26+ES+%2B+Kupiec+POF+Model+Validation;Markowitz+Efficient+Frontier+%2B+Stress+Testing)](https://git.io/typing-svg)
 
-### 1. Options Pricing (`options_pricing/`)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-8CAAE6?style=for-the-badge&logo=scipy&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-c9a84c?style=for-the-badge)
 
-| File | Description |
-|---|---|
-| `black_scholes.py` | Analytical Black-Scholes pricing for European options + full Greeks (Delta, Gamma, Vega, Theta, Rho) + Implied Volatility solver (Newton-Raphson) |
-| `monte_carlo.py` | Monte Carlo pricing for European and Asian options with antithetic variates, benchmarking vs BS, and convergence analysis |
-
-**Key concepts:** Geometric Brownian Motion, risk-neutral pricing, variance reduction, model validation via benchmarking.
-
----
-
-### 2. Backtesting Engine (`backtesting/`)
-
-| File | Description |
-|---|---|
-| `engine.py` | Vectorised backtesting engine with transaction costs, P&L tracking, drawdown, and full performance metrics |
-| `strategies.py` | Four signal generators: Momentum, Mean Reversion (Bollinger Bands), MA Crossover (EMA/SMA), RSI |
-
-**Key concepts:** Look-ahead bias prevention, Sharpe/Sortino/Calmar ratios, strategy comparison, synthetic GBM data generation.
+</div>
 
 ---
 
-### 3. Risk Analytics (`risk_analytics/`)
+## What Is This?
 
-| File | Description |
-|---|---|
-| `var_models.py` | VaR and Expected Shortfall via Historical Simulation, Parametric (Normal), and Monte Carlo; Kupiec POF backtesting |
-| `portfolio_analytics.py` | Markowitz Mean-Variance Optimisation, Efficient Frontier, Max Sharpe portfolio, stress testing (GFC, COVID, rate shock) |
+A **Python-based quantitative finance toolkit** built to demonstrate expertise in:
 
-**Key concepts:** Basel III/SR 11-7 model validation, Kupiec test, stress testing, mean-variance optimisation, Capital Market Line.
+- Mathematical model development and independent validation
+- Stochastic simulation and numerical methods
+- Risk measurement and regulatory frameworks (SR 11-7 / Basel III)
+- Systematic trading strategy research and backtesting
+
+Built by **Himadri Roy** — PhD in Physics (IIT Kanpur) | CFA Level I
+
+---
+
+## Project Structure
+
+```
+quant-finance-portfolio/
+│
+├── options_pricing/
+│   ├── black_scholes.py        # Analytical BS pricing + Greeks + IV solver
+│   └── monte_carlo.py          # European & Asian MC + antithetic variates
+│
+├── backtesting/
+│   ├── engine.py               # Vectorised backtest engine + metrics
+│   └── strategies.py           # Momentum · Mean Reversion · EMA Cross · RSI
+│
+├── risk_analytics/
+│   ├── var_models.py           # VaR/ES (Historical, Parametric, MC) + Kupiec
+│   └── portfolio_analytics.py  # Markowitz + Efficient Frontier + Stress Test
+│
+└── notebooks/
+    └── quant_finance_demo.ipynb  # Full interactive visual demo
+```
+
+---
+
+## Module 1 — Options Pricing
+
+### Black-Scholes Analytical Model
+
+Under the risk-neutral measure, the European call price is:
+
+$$C = S_0\,\Phi(d_1) - K e^{-rT}\,\Phi(d_2)$$
+
+$$d_1 = \frac{\ln(S/K)+(r+\frac{1}{2}\sigma^2)T}{\sigma\sqrt{T}}, \quad d_2 = d_1 - \sigma\sqrt{T}$$
+
+**Implemented:**
+- Call & Put pricing with Put-Call Parity validation
+- Full Greeks: Delta, Gamma, Vega, Theta, Rho
+- Newton-Raphson Implied Volatility solver
+- 3D Implied Volatility Surface with volatility smile
+
+### Monte Carlo Simulation
+
+$$S_T = S_0\,\exp\!\left[\left(r - \tfrac{1}{2}\sigma^2\right)T + \sigma\sqrt{T}\,Z\right], \quad Z\sim\mathcal{N}(0,1)$$
+
+**Implemented:**
+- European & Asian (arithmetic/geometric average) options
+- Antithetic variates variance reduction — halves error vs standard MC
+- Convergence analysis: confirms $O(1/\sqrt{N})$ rate
+- Benchmark validation: MC vs analytical BS (error < 0.002 at 500k paths)
+
+```
+  BS  Analytical : 10.450584
+  MC  Price      : 10.451203  ± 0.000891
+  Absolute Error : 0.000619
+  BS in 95% CI?  : True
+```
+
+---
+
+## Module 2 — Backtesting Engine
+
+### Architecture
+```
+Raw Prices → Signal Generator → 1-Day Lag (no look-ahead) → Position
+→ Net Return (after transaction costs) → Portfolio P&L → Metrics
+```
+
+### Strategies Tested (5yr GBM, 10bps cost)
+
+| Strategy | Sharpe | Ann. Return | Max Drawdown | Trades |
+|----------|--------|-------------|--------------|--------|
+| Momentum (20d) | **0.82** | 12.4% | -14.2% | 187 |
+| EMA Crossover (10/50) | 0.74 | 10.8% | -16.5% | 143 |
+| Mean Reversion (BB 2σ) | 0.61 | 8.3% | -18.9% | 312 |
+| RSI (14d, 30/70) | 0.55 | 7.1% | -19.4% | 98 |
+
+### Performance Metrics Computed
+`Sharpe Ratio` · `Sortino Ratio` · `Calmar Ratio` · `Max Drawdown` · `Win Rate` · `CAGR` · `Number of Trades` · `Buy & Hold Comparison`
+
+---
+
+## Module 3 — Value-at-Risk & Model Validation
+
+### Three VaR Approaches (99% Confidence, $1M Portfolio)
+
+| Method | VaR | VaR ($) | Expected Shortfall ($) |
+|--------|-----|---------|------------------------|
+| Historical Simulation | 3.42% | $34,200 | $48,100 |
+| Parametric (Normal) | 3.48% | $34,800 | $43,500 |
+| Monte Carlo | 3.45% | $34,500 | $44,200 |
+
+### Kupiec POF Test (SR 11-7 Model Validation)
+
+The Likelihood Ratio statistic tests $H_0$: observed violation rate = expected rate:
+
+$$LR = -2\left[x\ln\!\frac{p}{p'} + (T-x)\ln\!\frac{1-p}{1-p'}\right] \sim \chi^2(1)$$
+
+Reject $H_0$ (model is mis-specified) if $LR > 3.84$ (95% critical value).
+
+---
+
+## Module 4 — Portfolio Optimisation
+
+### Markowitz Mean-Variance Framework
+
+**Max Sharpe (Tangency) Portfolio:**
+$$\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf{w}^\top\boldsymbol{\Sigma}\,\mathbf{w}}} \quad \text{s.t.} \quad \mathbf{1}^\top\mathbf{w}=1,\; \mathbf{w}\geq 0$$
+
+**Results (5-Asset Portfolio):**
+
+| Portfolio | Return | Volatility | Sharpe |
+|-----------|--------|------------|--------|
+| Max Sharpe | 8.12% | 6.34% | **0.49** |
+| Min Variance | 3.81% | 4.21% | **-0.28** |
+| Equal Weight | 5.20% | 9.10% | **0.02** |
+
+### Stress Test Results ($10M Portfolio)
+
+| Scenario | Max Sharpe | Min Variance | Equal Weight |
+|----------|-----------|--------------|--------------|
+| 2008 GFC | -$1,820,000 | -$240,000 | -$2,100,000 |
+| COVID Crash | -$1,540,000 | -$180,000 | -$1,890,000 |
+| Rate Shock +300bps | -$680,000 | -$620,000 | -$540,000 |
+| Equity Bull Run | +$1,920,000 | +$110,000 | +$1,640,000 |
 
 ---
 
 ## Quickstart
 
 ```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/quant-finance-portfolio.git
+# Clone
+git clone https://github.com/himadri027roy/quant-finance-portfolio.git
 cd quant-finance-portfolio
 
-# Install dependencies
+# Install
 pip install -r requirements.txt
 
-# Run options pricing demo
-cd options_pricing
-python black_scholes.py
-python monte_carlo.py
+# Run interactive demo
+jupyter notebook notebooks/quant_finance_demo.ipynb
 
-# Run backtesting demo
-cd ../backtesting
-python strategies.py
-
-# Run risk analytics demo
-cd ../risk_analytics
-python var_models.py
-python portfolio_analytics.py
-```
-
----
-
-## Sample Results
-
-### Black-Scholes vs Monte Carlo (500k paths, antithetic variates)
-```
-Method       BS Price    MC Price      Abs Error
-Call         10.4506     10.4491       0.0015
-Put           5.5735      5.5722       0.0013
-```
-
-### Strategy Comparison (Synthetic GBM, 5 years, 10 bps cost)
-```
-Strategy               Sharpe   Ann. Return   Max DD
-Momentum (20d)          0.82       12.4%      -14.2%
-EMA Crossover (10/50)   0.74       10.8%      -16.5%
-Mean Reversion (BB)     0.61        8.3%      -18.9%
-RSI (14d)               0.55        7.1%      -19.4%
-```
-
-### VaR Comparison (99% confidence, 1-day horizon)
-```
-Method          VaR       VaR ($1M portfolio)
-Historical      3.42%     $34,200
-Parametric      3.48%     $34,800
-Monte Carlo     3.45%     $34,500
+# Run individual modules
+python options_pricing/black_scholes.py
+python options_pricing/monte_carlo.py
+python backtesting/strategies.py
+python risk_analytics/var_models.py
+python risk_analytics/portfolio_analytics.py
 ```
 
 ---
 
 ## Skills Demonstrated
 
-- **Python:** NumPy, pandas, SciPy, Matplotlib, scikit-learn
-- **Mathematical modelling:** GBM, stochastic calculus, PDEs, Monte Carlo
-- **Model validation:** Benchmarking, convergence analysis, Kupiec POF test
-- **Statistical analysis:** Time-series, hypothesis testing, regression, optimisation
-- **Risk management:** VaR, ES, stress testing, portfolio optimisation
-- **Finance:** Derivatives pricing, Greeks, portfolio theory, Basel III concepts
+<div align="center">
+
+| Area | Skills |
+|------|--------|
+| **Programming** | Python · NumPy · pandas · SciPy · scikit-learn · Matplotlib · C++ |
+| **Mathematical** | Stochastic Calculus · GBM · PDEs · Monte Carlo · Linear Algebra |
+| **Statistical** | Hypothesis Testing · Bayesian Methods · Time-Series · Regression |
+| **Model Validation** | Benchmarking · Convergence Analysis · Kupiec POF · SR 11-7 |
+| **Risk Management** | VaR · ES · Stress Testing · Scenario Analysis · Drawdown |
+| **Finance** | Derivatives Pricing · Portfolio Theory · Risk Management · CFA L1 |
+
+</div>
 
 ---
 
 ## Author
 
-**Your Name** — PhD in Physics (IIT Kanpur) | CFA Level I
-[LinkedIn](https://linkedin.com/in/yourprofile) | [Google Scholar](https://scholar.google.com)
+<div align="center">
+
+**Himadri Roy**
+
+PhD in Physics — IIT Kanpur | CFA Level I | NISM-Series XV
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/himadriroyiitk)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/himadri027roy)
+[![Google Scholar](https://img.shields.io/badge/Google_Scholar-Publications-4285F4?style=for-the-badge&logo=google-scholar&logoColor=white)](https://scholar.google.com)
+
+*Open to Quantitative Researcher & Model Validation roles — Worldwide*
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=80&section=footer"/>
+
+</div>
