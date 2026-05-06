@@ -76,12 +76,7 @@ $$S_T = S_0\,\exp\!\left[\left(r - \tfrac{1}{2}\sigma^2\right)T + \sigma\sqrt{T}
 - Convergence analysis: confirms $O(1/\sqrt{N})$ rate
 - Benchmark validation: MC vs analytical BS (error < 0.002 at 500k paths)
 
-```
-  BS  Analytical : 10.450584
-  MC  Price      : 10.451203  ± 0.000891
-  Absolute Error : 0.000619
-  BS in 95% CI?  : True
-```
+
 
 ---
 
@@ -141,10 +136,6 @@ $$\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf
 | Rate Shock +300bps | -$680,000 | -$620,000 | -$540,000 |
 | Equity Bull Run | +$1,920,000 | +$110,000 | +$1,640,000 |
 
-
-
-
-
 ---
 
 ## Skills Demonstrated
@@ -176,7 +167,6 @@ PhD in Physics — IIT Kanpur | CFA Level I | NISM-Series XV
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/himadri027roy)
 [![InspireHEP](https://img.shields.io/badge/InspireHEP-Publications-e06c00?style=for-the-badge&logo=arxiv&logoColor=white)](https://inspirehep.net/authors/1969274)
 
-*Open to Quantitative Researcher & Model Validation roles — Worldwide*
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=80&section=footer"/>
 
