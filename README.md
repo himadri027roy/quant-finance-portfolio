@@ -141,16 +141,9 @@ $$\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf
 | Rate Shock +300bps | -$680,000 | -$620,000 | -$540,000 |
 | Equity Bull Run | +$1,920,000 | +$110,000 | +$1,640,000 |
 
----
 
-## Quickstart
 
-```bash
-git clone https://github.com/himadri027roy/quant-finance-portfolio.git
-cd quant-finance-portfolio
-pip install -r requirements.txt
-jupyter notebook notebooks/quant_finance_demo.ipynb
-```
+
 
 ---
 
