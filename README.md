@@ -23,7 +23,7 @@ A **Python-based quantitative finance toolkit** built to demonstrate expertise i
 - Risk measurement and regulatory frameworks (SR 11-7 / Basel III)
 - Systematic trading strategy research and backtesting
 
-**Author:** Himadri Roy — PhD in Physics (IIT Kanpur) | CFA Level I | NISM-Series XV
+**Author:** Himadri Roy — PhD in Physics (IIT Kanpur) | CFA Level I | NISM-Series XV | AI Training Specialist at Turing
 
 ---
 
@@ -75,7 +75,6 @@ $$S_T = S_0\,\exp\!\left[\left(r - \tfrac{1}{2}\sigma^2\right)T + \sigma\sqrt{T}
 - Antithetic variates variance reduction
 - Convergence analysis: confirms $O(1/\sqrt{N})$ rate
 - Benchmark validation: MC vs analytical BS (error < 0.002 at 500k paths)
-
 
 
 ---
